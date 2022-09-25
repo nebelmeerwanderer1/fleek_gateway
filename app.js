@@ -3,6 +3,7 @@ const cors = require('cors')
 const multer = require("multer")
 const path = require("path")
 const fleekStorage = require('@fleekhq/fleek-storage-js')
+require('dotenv').config();
 
 const app = express()
 
@@ -32,7 +33,7 @@ app.get("/upload", (req,res) => {
     res.send("HALLLOOOOO!!!")
 })
 
-//const data = new FormData();
+
 
 app.post("/upload", upload.single("profile"), async (req,res) => {
     
@@ -42,8 +43,8 @@ app.post("/upload", upload.single("profile"), async (req,res) => {
 
     try {
       uploadedFile = await fleekStorage.upload({
-      apiKey: "bFu7DdSqjmFGE6XPBhBhFw==",
-      apiSecret: "GBshkUuwquS33YGGCq2SNUvXNEYX7Dl9LciHltI3IJQ=",
+      apiKey: process.env.FLEEK_KEY,
+      apiSecret: process.env.FLEEK_SECRET,
       key: `${req.file.fieldname}_${Date.now()}_${req.file.originalname}`,
       data: req.file.buffer,
       bucket:'d134e9df-8e89-44e3-8632-20922d73b6ed-bucket/inheritance',
